@@ -1,23 +1,29 @@
-// ---------- Persistence ----------
-const LS_KEY_DATA = "promptlib:data";
-const LS_KEY_CFG  = "promptlib:cfg";
-const LS_KEY_FAVS = "promptlib:favs";
+/***********************
+ * SUPER BIBLIOTECA JS *
+ ***********************/
 
-function loadLS(key, fallback){
-  try{
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  }catch{ return fallback; }
-}
-function saveLS(key, obj){
-  try{ localStorage.setItem(key, JSON.stringify(obj)); }catch{}
-}
-
-// ---------- Data Seeds ----------
-const defaultSeeds = (() => {
-  const personas = ["Advogado Consumerista", "Copywriter", "Social Media", "Professor de Tecnologia", "Especialista em SEO", "Mentor de Carreira", "Programador", "Nutricionista"];
-  const temas = ["Marketing", "Criação de Conteúdo", "Desenvolvimento Web", "Negócios", "Direito", "Educação", "Saúde e Bem-Estar", "Produtividade"];
-  const tipos = ["Carrossel Instagram", "Tweet/Thread", "Post LinkedIn", "Reels/TikTok", "Legenda", "Vídeo Longo", "Título de Blog", "E-mail"];
+/* ------------------ Seeds de exemplo ------------------ */
+const seeds = (() => {
+  const personas = [
+    "Advogado Consumerista",
+    "Copywriter",
+    "Social Media",
+    "Professor de Tecnologia",
+    "Especialista em SEO",
+    "Mentor de Carreira",
+    "Programador",
+    "Nutricionista",
+    "Designer UX",
+    "Gestor de Projetos"
+  ];
+  const temas = [
+    "Marketing","Criação de Conteúdo","Desenvolvimento Web","Negócios","Direito",
+    "Educação","Saúde e Bem-Estar","Produtividade","Inovação","Finanças Pessoais"
+  ];
+  const tipos = [
+    "Carrossel Instagram","Tweet/Thread","Post LinkedIn","Reels/TikTok","Legenda",
+    "Vídeo Longo","Título de Blog","E-mail Marketing","Script de YouTube","Checklist"
+  ];
   const base = [];
   let id = 1;
   for (let p = 0; p < personas.length; p++) {
@@ -30,46 +36,46 @@ const defaultSeeds = (() => {
         persona: personas[p],
         tema,
         tipo,
-        tags: [personas[p], tema, tipo].map(t => t.toLowerCase()),
-        prompt: `Atue como ${personas[p]} e produza um ${tipo.toLowerCase()} sobre "${tema}".
-- Público: iniciante a intermediário
-- Tom: claro, prático e persuasivo
-- Entregue: 5 variações + CTA final.
-Use bullets e exemplos do mercado brasileiro.`
+        tags: [tema.toLowerCase(), personas[p].split(" ")[0].toLowerCase()],
+        prompt: `Atue como ${personas[p]} e crie um ${tipo.toLowerCase()} sobre ${tema}.
+- Público: iniciante
+- Tom: claro e prático
+- Entregue: 3 variações + CTA final.
+Inclua exemplos do mercado brasileiro.`
       });
     }
   }
   return base;
 })();
 
-let DATA = loadLS(LS_KEY_DATA, defaultSeeds);
-let FAVS = new Set(loadLS(LS_KEY_FAVS, []));
+/* ------------------ Estado e utilitários ------------------ */
+let DATA = [...seeds];            // será substituída por prompts_5000.json se existir
+let ROUTE = "#/";                 // "#/", "#/favoritos", "#/sobre"
 
-// ---------- State ----------
-let state = Object.assign({
+let state = {
   tab: "persona",
   query: "",
   primary: "Todos",
   secondary: "Todos",
   pageSize: 30,
   page: 1,
-  onlyFav: false,
-  theme: "dark",
-  tagFilters: [] // tags ativas
-}, loadLS(LS_KEY_CFG, {}));
+  showOnlyFavorites: false,
+};
 
-// ---------- Elements ----------
-const $ = (s, root=document) => root.querySelector(s);
-const $$ = (s, root=document) => Array.from(root.querySelectorAll(s));
+const $ = (s, r=document)=>r.querySelector(s);
+const $$ = (s, r=document)=>Array.from(r.querySelectorAll(s));
+const normalize = (s) => (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const uniq = (arr) => [...new Set(arr)];
+const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
+/* ------------------ Elementos ------------------ */
 const countEl = $("#count");
 const tabs = $$(".tab");
 const primarySelect = $("#primarySelect");
 const secondarySelect = $("#secondarySelect");
 const primaryLabel = $("#primaryLabel");
 const searchInput = $("#search");
-const pageSize = $("#pageSize");
-const onlyFav = $("#onlyFav");
+const pageSizeEl = $("#pageSize");
 const list = $("#list");
 const prev = $("#prev");
 const next = $("#next");
@@ -81,37 +87,90 @@ const btnExport = $("#btnExport");
 const fileInput = $("#fileInput");
 const btnGen = $("#btnGen");
 const genQty = $("#genQty");
-const btnTheme = $("#btnTheme");
-const btnFavView = $("#btnFavView");
 const btnClear = $("#btnClear");
+const btnToggleTheme = $("#btnToggleTheme");
 
-// ---------- Utils ----------
-function uniq(arr){ return [...new Set(arr)]; }
-function normalize(s){ return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""); }
-function matchesQuery(item, q){
-  if(!q) return true;
-  const hay = normalize(`${item.titulo} ${item.prompt} ${item.persona} ${item.tema} ${item.tipo} ${(item.tags||[]).join(" ")}`);
-  return hay.includes(normalize(q));
+/* ------------------ Tema (persistência) ------------------ */
+const THEME_KEY = "promptstar_theme";
+function loadTheme(){
+  const t = localStorage.getItem(THEME_KEY) || "dark";
+  document.documentElement.setAttribute("data-theme", t);
 }
-function groupKey(){ return state.tab === "persona" ? "persona" : state.tab === "tema" ? "tema" : "tipo"; }
-function otherKey(){ return state.tab === "persona" ? "tema" : state.tab === "tema" ? "tipo" : "persona"; }
-function saveAll(){ saveLS(LS_KEY_DATA, DATA); saveLS(LS_KEY_CFG, state); saveLS(LS_KEY_FAVS, Array.from(FAVS)); }
-function isFav(id){ return FAVS.has(id); }
-function toggleFav(id){ if(FAVS.has(id)) FAVS.delete(id); else FAVS.add(id); saveLS(LS_KEY_FAVS, Array.from(FAVS)); }
-
-// ---------- Theme ----------
-function applyTheme(){
-  document.documentElement.setAttribute("data-theme", state.theme === "light" ? "light" : "dark");
+function toggleTheme(){
+  const now = document.documentElement.getAttribute("data-theme")==="dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", now);
+  localStorage.setItem(THEME_KEY, now);
 }
-applyTheme();
 
-// ---------- Rendering ----------
+/* ------------------ Favoritos ------------------ */
+const FAVORITES_KEY = "promptstar_favs";
+function getFavs(){
+  try { return JSON.parse(localStorage.getItem(FAVORITES_KEY)||"[]"); } catch { return []; }
+}
+function setFavs(ids){ localStorage.setItem(FAVORITES_KEY, JSON.stringify(uniq(ids))); }
+function isFav(id){ return getFavs().includes(id); }
+function toggleFav(id){
+  const f = getFavs();
+  if(f.includes(id)) setFavs(f.filter(x=>x!==id));
+  else setFavs([...f, id]);
+}
+
+/* ------------------ Busca + realce ------------------ */
+function matchScore(text, q){
+  const hay = normalize(text);
+  const terms = normalize(q).split(/\s+/).filter(Boolean);
+  if(!terms.length) return 1;
+  let score = 0;
+  for(const t of terms){ if(hay.includes(t)) score += 1; }
+  return score / terms.length;
+}
+function highlight(text, q){
+  if(!q) return text;
+  const terms = normalize(q).split(/\s+/).filter(Boolean);
+  if(!terms.length) return text;
+  let result = text;
+  for(const t of terms){
+    if(!t) continue;
+    const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "ig");
+    result = result.replace(re, "<mark>$1</mark>");
+  }
+  return result;
+}
+
+/* ------------------ Group keys ------------------ */
+const groupKey = () => state.tab === "persona" ? "persona" : state.tab === "tema" ? "tema" : "tipo";
+const otherKey = () => state.tab === "persona" ? "tema" : state.tab === "tema" ? "tipo" : "persona";
+
+/* -------- Auto-carregamento de prompts_5000.json -------- */
+async function tryLoadExternalJSON(){
+  try{
+    const res = await fetch('prompts_5000.json', { cache: 'no-store' });
+    if(res.ok){
+      const arr = await res.json();
+      if(Array.isArray(arr) && arr.length){
+        DATA = arr.map((x,i)=> ({
+          id: x.id ?? i+1,
+          titulo: x.titulo ?? `Prompt #${i+1}`,
+          persona: x.persona ?? 'N/D',
+          tema: x.tema ?? 'N/D',
+          tipo: x.tipo ?? 'N/D',
+          tags: Array.isArray(x.tags) ? x.tags : [],
+          prompt: x.prompt ?? ''
+        }));
+        state.page = 1;
+      }
+    }
+  }catch(e){ /* fallback nos seeds */ }
+}
+
+/* ------------------ Renderização ------------------ */
 function renderSelects(){
   const gk = groupKey();
   const ok = otherKey();
+  const source = state.showOnlyFavorites ? DATA.filter(d=>isFav(d.id)) : DATA;
 
-  const primaryValues = ["Todos", ...uniq(DATA.map(x => x[gk])).sort()];
-  const secondaryValues = ["Todos", ...uniq(DATA.map(x => x[ok])).sort()];
+  const primaryValues = ["Todos", ...uniq(source.map(x => x[gk])).sort()];
+  const secondaryValues = ["Todos", ...uniq(source.map(x => x[ok])).sort()];
 
   primarySelect.innerHTML = primaryValues.map(v => `<option ${v===state.primary?"selected":""}>${v}</option>`).join("");
   secondarySelect.innerHTML = secondaryValues.map(v => `<option ${v===state.secondary?"selected":""}>${v}</option>`).join("");
@@ -122,173 +181,143 @@ function renderSelects(){
 
 function renderChips(total, filtered){
   chips.innerHTML = "";
-  const c1 = document.createElement("span"); c1.className="chip";
-  c1.textContent = `Total: ${total}`;
-  const c2 = document.createElement("span"); c2.className="chip";
-  c2.textContent = `Filtrados: ${filtered}`;
-  const c3 = document.createElement("span"); c3.className="chip";
-  c3.textContent = `Exibindo: ${Math.min(state.pageSize, filtered)}`;
-  chips.append(c1,c2,c3);
+  const mk = (t)=>{ const s=document.createElement("span"); s.className="chip"; s.textContent=t; return s; };
+  chips.append(mk(`Total: ${total}`), mk(`Filtrados: ${filtered}`), mk(`Exibindo: ${Math.min(state.pageSize, filtered)}`));
+  if(state.showOnlyFavorites) chips.append(mk("⭐ Exibindo favoritos"));
+}
 
-  // Tag filters ativos
-  state.tagFilters.forEach(tag => {
-    const t = document.createElement("span");
-    t.className = "chip active";
-    t.textContent = `#${tag}`;
-    t.title = "Remover tag de filtro";
-    t.addEventListener("click", () => {
-      state.tagFilters = state.tagFilters.filter(x => x !== tag);
-      state.page = 1; render();
-    });
-    chips.appendChild(t);
-  });
+function similarOf(item){
+  const pool = (state.showOnlyFavorites ? DATA.filter(d=>isFav(d.id)) : DATA).filter(d => d.id !== item.id);
+  const scored = pool.map(d => {
+    let s = 0;
+    if(d.persona === item.persona) s += 3;
+    if(d.tema === item.tema) s += 2;
+    if(d.tipo === item.tipo) s += 1;
+    s += matchScore(`${d.titulo} ${d.prompt}`, item.persona + " " + item.tema + " " + item.tipo) * .5;
+    return {d, s};
+  }).sort((a,b)=>b.s-a.s);
+  return scored.slice(0,3).map(x=>x.d);
 }
 
 function render(){
-  // Filtragem
   const gk = groupKey();
   const ok = otherKey();
 
-  let filtered = DATA.filter(d => matchesQuery(d, state.query));
+  if((location.hash||"#/") === "#/sobre"){
+    const about = document.getElementById("about");
+    if(about) about.scrollIntoView({behavior:"smooth", block:"start"});
+  }
 
+  const base = state.showOnlyFavorites ? DATA.filter(d => isFav(d.id)) : DATA;
+
+  let filtered = base.filter(d => {
+    const passesQuery = !state.query || matchScore(`${d.titulo} ${d.prompt} ${d.persona} ${d.tema} ${d.tipo}`, state.query) > 0;
+    return passesQuery;
+  });
   if(state.primary !== "Todos") filtered = filtered.filter(d => d[gk] === state.primary);
   if(state.secondary !== "Todos") filtered = filtered.filter(d => d[ok] === state.secondary);
 
-  if(state.onlyFav) filtered = filtered.filter(d => isFav(d.id));
-
-  if(state.tagFilters.length){
-    filtered = filtered.filter(d => {
-      const tags = (d.tags || []).map(x => normalize(x));
-      return state.tagFilters.every(tag => tags.includes(normalize(tag)));
-    });
+  if(state.query){
+    filtered = filtered
+      .map(d => ({ d, s: matchScore(`${d.titulo} ${d.prompt}`, state.query) }))
+      .sort((a,b)=>b.s-a.s).map(x=>x.d);
   }
 
-  // Paginação
   const total = filtered.length;
   const pages = Math.max(1, Math.ceil(total / state.pageSize));
-  if(state.page > pages) state.page = pages;
+  state.page = clamp(state.page, 1, pages);
   const start = (state.page - 1) * state.pageSize;
   const slice = filtered.slice(start, start + state.pageSize);
 
-  // Header info
-  countEl.textContent = `${DATA.length} prompts`;
+  countEl.textContent = `${(state.showOnlyFavorites ? DATA.filter(d=>isFav(d.id)).length : DATA.length)} prompts`;
 
-  // Chips
-  renderChips(DATA.length, total);
+  renderSelects();
+  renderChips(base.length, total);
 
-  // Lista
   list.innerHTML = "";
   slice.forEach(item => {
     const node = cardTpl.content.firstElementChild.cloneNode(true);
-    node.querySelector(".title").textContent = item.titulo;
-    node.querySelector(".meta").textContent = `${item.persona} • ${item.tema} • ${item.tipo}${isFav(item.id) ? " • ⭐ favorito" : ""}`;
-    node.querySelector(".prompt").textContent = item.prompt;
+    node.querySelector(".title").innerHTML = highlight(item.titulo, state.query);
+    node.querySelector(".meta").textContent = `${item.persona} • ${item.tema} • ${item.tipo}`;
+    node.querySelector(".prompt").innerHTML = highlight(item.prompt, state.query);
 
-    // Tags
-    const tagrow = node.querySelector(".tagrow");
-    (item.tags || []).forEach(tag => {
-      const chip = document.createElement("span");
-      chip.className = "chip";
-      chip.textContent = `#${tag}`;
-      chip.addEventListener("click", () => {
-        if(!state.tagFilters.includes(tag)){
-          state.tagFilters.push(tag);
-          state.page = 1; render();
-        }
+    const tagsWrap = node.querySelector(".tags");
+    (item.tags||[]).forEach(t => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "tag";
+      b.textContent = `#${t}`;
+      b.addEventListener("click", () => {
+        searchInput.value = t;
+        state.query = t;
+        state.page = 1;
+        render();
       });
-      tagrow.appendChild(chip);
+      tagsWrap.appendChild(b);
     });
 
-    // Ações
-    node.querySelector(".copy").addEventListener("click", async () => {
+    const sWrap = node.querySelector(".suggestions");
+    const sims = similarOf(item);
+    sims.forEach(sim => {
+      const s = document.createElement("button");
+      s.className = "suggestion";
+      s.textContent = `Relacionado: ${sim.titulo}`;
+      s.addEventListener("click", () => {
+        state.primary = "Todos";
+        state.secondary = "Todos";
+        state.query = sim.persona + " " + sim.tema + " " + sim.tipo;
+        searchInput.value = state.query;
+        state.page = 1;
+        render();
+      });
+      sWrap.appendChild(s);
+    });
+
+    const copyBtn = node.querySelector(".copy");
+    copyBtn.addEventListener("click", async () => {
       await navigator.clipboard.writeText(item.prompt);
-      const btn = node.querySelector(".copy");
-      btn.textContent = "Copiado!";
-      setTimeout(() => btn.textContent = "Copiar", 1400);
-    });
-
-    node.querySelector(".similar").addEventListener("click", () => {
-      state.tab = "persona"; // foca por persona/tema
-      state.primary = item.persona;
-      state.secondary = item.tema;
-      setActiveTab();
-      state.page = 1;
-      renderSelects();
-      render();
+      copyBtn.textContent = "Copiado!";
+      setTimeout(() => copyBtn.textContent = "Copiar", 1200);
     });
 
     const favBtn = node.querySelector(".fav");
-    function paintFav(){ favBtn.textContent = isFav(item.id) ? "⭐ Desfavoritar" : "⭐ Favoritar"; }
+    const paintFav = () => favBtn.textContent = isFav(item.id) ? "⭐ Favorito" : "⭐ Favoritar";
     paintFav();
-    favBtn.addEventListener("click", () => {
-      toggleFav(item.id);
-      paintFav();
-      render(); // atualiza meta
-    });
+    favBtn.addEventListener("click", () => { toggleFav(item.id); paintFav(); });
 
     list.appendChild(node);
   });
 
-  // Pager
   pageInfo.textContent = `Página ${state.page} de ${pages}`;
   prev.disabled = state.page <= 1;
   next.disabled = state.page >= pages;
-
-  // Persist
-  saveLS(LS_KEY_CFG, state);
 }
 
-// ---------- Tabs ----------
-function setActiveTab(){
-  tabs.forEach(t => t.classList.toggle("active", t.dataset.tab === state.tab));
-}
-
-// ---------- Events ----------
+/* ------------------ Eventos UI ------------------ */
 tabs.forEach(btn => btn.addEventListener("click", () => {
   state.tab = btn.dataset.tab;
   state.primary = "Todos";
   state.secondary = "Todos";
-  setActiveTab();
-  renderSelects();
   state.page = 1;
+  tabs.forEach(t => t.classList.toggle("active", t === btn));
   render();
 }));
-
 searchInput.addEventListener("input", (e) => { state.query = e.target.value; state.page = 1; render(); });
 primarySelect.addEventListener("change", (e) => { state.primary = e.target.value; state.page = 1; render(); });
 secondarySelect.addEventListener("change", (e) => { state.secondary = e.target.value; state.page = 1; render(); });
-pageSize.addEventListener("change", (e) => { state.pageSize = parseInt(e.target.value,10); state.page = 1; render(); });
+pageSizeEl.addEventListener("change", (e) => { state.pageSize = parseInt(e.target.value,10); state.page = 1; render(); });
 prev.addEventListener("click", () => { state.page = Math.max(1, state.page-1); render(); });
 next.addEventListener("click", () => { state.page = state.page+1; render(); });
-onlyFav.addEventListener("change", (e) => { state.onlyFav = e.target.checked; state.page = 1; render(); });
 
-// ---------- Theme Toggle ----------
-btnTheme.addEventListener("click", () => {
-  state.theme = state.theme === "light" ? "dark" : "light";
-  applyTheme();
-  saveLS(LS_KEY_CFG, state);
-});
-
-// ---------- Favoritos View toggle shortcut ----------
-btnFavView.addEventListener("click", () => {
-  state.onlyFav = !state.onlyFav;
-  onlyFav.checked = state.onlyFav;
-  state.page = 1;
-  render();
-});
-
-// ---------- Import/Export ----------
+/* ------------------ Import/Export ------------------ */
 btnExport.addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(DATA, null, 2)], {type: "application/json"});
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download = "prompts.json";
-  document.body.appendChild(a);
-  a.click();
-  URL.revokeObjectURL(url);
-  a.remove();
+  document.body.appendChild(a); a.click();
+  URL.revokeObjectURL(url); a.remove();
 });
-
 fileInput.addEventListener("change", async (e) => {
   const file = e.target.files?.[0];
   if(!file) return;
@@ -302,13 +331,11 @@ fileInput.addEventListener("change", async (e) => {
       persona: x.persona ?? "N/D",
       tema: x.tema ?? "N/D",
       tipo: x.tipo ?? "N/D",
-      tags: Array.isArray(x.tags) ? x.tags : [x.persona, x.tema, x.tipo].filter(Boolean).map(s=>String(s).toLowerCase()),
+      tags: Array.isArray(x.tags) ? x.tags : [],
       prompt: x.prompt ?? ""
     }));
     state.page = 1;
-    renderSelects();
     render();
-    saveLS(LS_KEY_DATA, DATA);
   }catch(err){
     alert("Falha ao importar JSON: " + err.message);
   }finally{
@@ -316,18 +343,17 @@ fileInput.addEventListener("change", async (e) => {
   }
 });
 
-// ---------- Generator ----------
+/* ------------------ Gerador ------------------ */
 function poolFromData(){
   const p = uniq(DATA.map(x => x.persona)).filter(Boolean);
   const t = uniq(DATA.map(x => x.tema)).filter(Boolean);
   const k = uniq(DATA.map(x => x.tipo)).filter(Boolean);
   return {
-    personas: p.length ? p : ["Advogado Consumerista","Copywriter","Social Media","Professor de Tecnologia","Especialista em SEO","Mentor de Carreira","Programador","Nutricionista"],
-    temas: t.length ? t : ["Marketing","Criação de Conteúdo","Desenvolvimento Web","Negócios","Direito","Educação","Saúde e Bem-Estar","Produtividade"],
-    tipos: k.length ? k : ["Carrossel Instagram","Tweet/Thread","Post LinkedIn","Reels/TikTok","Legenda","Vídeo Longo","Título de Blog","E-mail"]
+    personas: p.length ? p : ["Advogado Consumerista","Copywriter","Social Media","Professor de Tecnologia","Especialista em SEO","Mentor de Carreira","Programador","Nutricionista","Designer UX","Gestor de Projetos"],
+    temas: t.length ? t : ["Marketing","Criação de Conteúdo","Desenvolvimento Web","Negócios","Direito","Educação","Saúde e Bem-Estar","Produtividade","Inovação","Finanças Pessoais"],
+    tipos: k.length ? k : ["Carrossel Instagram","Tweet/Thread","Post LinkedIn","Reels/TikTok","Legenda","Vídeo Longo","Título de Blog","E-mail Marketing","Script de YouTube","Checklist"]
   };
 }
-
 function generateRandom(n=50){
   const pool = poolFromData();
   const nextIdStart = (DATA.reduce((m, x) => Math.max(m, x.id||0), 0) || 0) + 1;
@@ -337,17 +363,15 @@ function generateRandom(n=50){
     const tipo = pool.tipos[Math.floor(Math.random()*pool.tipos.length)];
     const id = nextIdStart + i;
     const titulo = `${tipo} • ${tema} • ${persona} • #${id}`;
+    const tags = [tema.toLowerCase(), persona.split(" ")[0].toLowerCase(), tipo.split(" ")[0].toLowerCase()];
     const prompt = `Atue como ${persona} e crie um ${tipo.toLowerCase()} sobre ${tema}. ` +
-                   `Use linguagem clara, inclua 3 exemplos práticos do contexto brasileiro, ` +
-                   `apresente um passo a passo e finalize com um CTA para conversão.`;
-    const tags = [persona, tema, tipo].map(s=>s.toLowerCase());
+                   `Use linguagem clara, 3 exemplos práticos do contexto brasileiro, ` +
+                   `passo a passo, e finalize com um CTA.`;
     DATA.push({ id, titulo, persona, tema, tipo, tags, prompt });
   }
-  saveLS(LS_KEY_DATA, DATA);
-  renderSelects();
+  state.page = 1;
   render();
 }
-
 btnGen.addEventListener("click", () => {
   let n = parseInt(genQty.value, 10);
   if(isNaN(n) || n < 1) n = 1;
@@ -355,23 +379,25 @@ btnGen.addEventListener("click", () => {
   generateRandom(n);
 });
 
-// ---------- Clear Library ----------
+/* ------------------ Limpar biblioteca ------------------ */
 btnClear.addEventListener("click", () => {
-  if(confirm("Tem certeza que deseja limpar toda a biblioteca? Isso removerá os prompts carregados (mantém favoritos).")){
-    DATA = [];
-    saveLS(LS_KEY_DATA, DATA);
-    state.page = 1;
-    renderSelects();
-    render();
-  }
+  if(!confirm("Limpar todos os prompts carregados nesta sessão? (Não remove seus arquivos)")) return;
+  DATA = [];
+  state.page = 1;
+  render();
 });
 
-// ---------- Init ----------
-function init(){
-  // Restore UI pieces
-  onlyFav.checked = state.onlyFav;
-  setActiveTab();
-  renderSelects();
+/* ------------------ Tema & Roteamento ------------------ */
+btnToggleTheme.addEventListener("click", toggleTheme);
+function handleRoute(){
+  ROUTE = location.hash || "#/";
+  state.showOnlyFavorites = ROUTE === "#/favoritos";
+  state.page = 1;
   render();
+  if(ROUTE === "#/"){ window.scrollTo({ top: 0, behavior: "smooth" }); }
 }
-init();
+window.addEventListener("hashchange", handleRoute);
+
+/* ------------------ Inicialização ------------------ */
+loadTheme();
+tryLoadExternalJSON().then(()=>{ render(); handleRoute(); });
