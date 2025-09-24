@@ -1,137 +1,239 @@
-<!DOCTYPE html>
-<html lang="pt-br" data-theme="dark">
+<!doctype html>
+<html lang="pt-BR" data-theme="auto">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Biblioteca de Prompts — Super</title>
-  <link rel="stylesheet" href="style.css"/>
-  <meta name="description" content="Biblioteca de prompts organizada por Persona, Tema e Tipo de Post — com busca, favoritos, importação/exportação e modo escuro/claro.">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS Prompt — Biblioteca de Prompts Premium</title>
+
+  <!-- SEO básico -->
+  <meta name="description" content="Biblioteca de prompts premium para IA, produtividade, estudos e advocacia consumerista. Rápido, responsivo e otimizado para SEO." />
+  <meta name="keywords" content="prompts, inteligência artificial, chatgpt, produtividade, advocacia, automação, estudos" />
+  <meta name="author" content="C.Silva" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://csilvadesweb.github.io/cs-prompt/" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CS Prompt — Biblioteca de Prompts Premium" />
+  <meta property="og:description" content="Prompts prontos e organizados para IA, produtividade e estudos. Se o site te ajuda, considere apoiar por PIX." />
+  <meta property="og:url" content="https://csilvadesweb.github.io/cs-prompt/" />
+  <meta property="og:image" content="./assets/preview.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Ícones -->
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./assets/icon-192.png" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.webmanifest" />
+
+  <!-- CSS e JS -->
+  <link rel="preload" href="./style.css" as="style" />
+  <link rel="stylesheet" href="./style.css" />
+  <script defer src="./script.js"></script>
+
+  <!-- Dados estruturados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "CS Prompt — Biblioteca de Prompts Premium",
+    "url": "https://csilvadesweb.github.io/cs-prompt/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://csilvadesweb.github.io/cs-prompt/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "CS Prompt",
+    "url": "https://csilvadesweb.github.io/cs-prompt/",
+    "email": "csdesweb@gmail.com",
+    "logo": "https://csilvadesweb.github.io/cs-prompt/assets/icon-192.png"
+  }
+  </script>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">⚡</div>
-      <div>
-        <h1>Biblioteca de Prompts</h1>
-        <p id="count">0 prompts</p>
-      </div>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Topo -->
+  <header class="topo" role="banner">
+    <div class="container topo__grid">
+      <h1 class="site-title">CS Prompt</h1>
+      <nav aria-label="Navegação principal">
+        <ul class="menu">
+          <li><a href="#prompts">Prompts</a></li>
+          <li><a href="#categorias">Categorias</a></li>
+          <li><a href="#favoritos">Favoritos</a></li>
+          <li><a href="#doacao">Doação</a></li>
+        </ul>
+      </nav>
+      <button id="btn-tema" class="btn ghost" aria-label="Alternar tema">🌓</button>
     </div>
-    <nav class="actions">
-      <button id="btnToggleTheme" class="btn ghost" title="Alternar tema">🌗 Tema</button>
-      <a href="#/" class="btn ghost">Explorar</a>
-      <a href="#/favoritos" class="btn ghost">⭐ Favoritos</a>
-      <a href="#/sobre" class="btn ghost">ℹ️ Sobre</a>
-      <button id="btnExport" class="btn ghost">Exportar</button>
-      <label class="btn ghost filelabel">Importar
-        <input id="fileInput" type="file" accept="application/json" hidden>
-      </label>
-      <div class="generator">
-        <input id="genQty" type="number" min="1" max="1000" value="50" />
-        <button id="btnGen" class="btn">Gerar</button>
-      </div>
-      <button id="btnClear" class="btn danger">🧹 Limpar</button>
-    </nav>
   </header>
 
-  <main class="container">
-    <nav class="tabs">
-      <button class="tab active" data-tab="persona">Por Persona</button>
-      <button class="tab" data-tab="tema">Por Tema</button>
-      <button class="tab" data-tab="post">Por Post</button>
-    </nav>
+  <main id="conteudo" class="container">
+    <!-- Hero -->
+    <section class="hero" aria-label="Introdução">
+      <h2>Biblioteca de Prompts Premium</h2>
+      <p>Prompts prontos e organizados para IA, produtividade, estudos e advocacia consumerista. <strong>Rápido, responsivo, com favoritos e modo offline.</strong></p>
+      <form id="busca" role="search" aria-label="Buscar prompts">
+        <label for="q" class="sr-only">Buscar</label>
+        <input id="q" name="q" type="search" placeholder="Buscar prompts…" inputmode="search" autocomplete="off" />
+        <button type="submit" class="btn primary">Buscar</button>
+      </form>
+      <p class="muted" id="resultado-contagem" aria-live="polite"></p>
+    </section>
 
-    <section class="controls">
-      <div class="search-wrap">
-        <span class="icon">🔎</span>
-        <input id="search" type="search" placeholder="Pesquisar prompts…" autocomplete="off">
-      </div>
-      <div class="filters">
-        <div class="select">
-          <label id="primaryLabel" for="primarySelect">Todas as Personas</label>
-          <select id="primarySelect"></select>
-        </div>
-        <div class="select">
-          <label for="secondarySelect">Todos os Itens</label>
-          <select id="secondarySelect"></select>
-        </div>
-        <div class="select">
-          <label for="pageSize">Mostrar</label>
-          <select id="pageSize">
-            <option>10</option><option>20</option><option selected>30</option>
-            <option>50</option><option>100</option>
-          </select>
-        </div>
+    <!-- Categorias -->
+    <section id="categorias" aria-labelledby="titulo-categorias">
+      <h2 id="titulo-categorias">Categorias</h2>
+      <div class="chips" role="list" aria-label="Filtros de categoria">
+        <button class="chip is-active" data-cat="todas" role="listitem">Todas</button>
+        <button class="chip" data-cat="produtividade" role="listitem">Produtividade</button>
+        <button class="chip" data-cat="advocacia" role="listitem">Advocacia</button>
+        <button class="chip" data-cat="estudos" role="listitem">Estudos</button>
+        <button class="chip" data-cat="marketing" role="listitem">Marketing</button>
       </div>
     </section>
 
-    <section id="chips" class="chips"></section>
-    <section id="list" class="list" aria-live="polite"></section>
+    <!-- Lista de Prompts -->
+    <section id="prompts" aria-labelledby="titulo-prompts">
+      <h2 id="titulo-prompts">Prompts</h2>
+      <div id="lista-prompts" class="grid">
+        <!-- Exemplo 1 -->
+        <article class="card" data-id="p1" data-cat="produtividade">
+          <header class="card__head">
+            <h3>Resumo inteligente de reuniões</h3>
+            <div class="card__actions">
+              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
+              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
+            </div>
+          </header>
+          <p>Gere um resumo com tópicos, decisões e próximos passos a partir de uma transcrição.</p>
+          <details>
+            <summary>Ver prompt</summary>
+            <pre><code>Atue como secretária executiva. A partir do texto abaixo, gere um resumo em tópicos com: decisões, responsáveis, prazos e riscos. Padronize datas no formato DD/MM/AAAA.</code></pre>
+          </details>
+        </article>
 
-    <footer class="pager">
-      <button id="prev" class="btn" disabled>◀</button>
-      <span id="pageInfo">Página 1</span>
-      <button id="next" class="btn">▶</button>
-    </footer>
+        <!-- Exemplo 2 -->
+        <article class="card" data-id="p2" data-cat="advocacia">
+          <header class="card__head">
+            <h3>Contestação de cobrança prescrita</h3>
+            <div class="card__actions">
+              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
+              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
+            </div>
+          </header>
+          <p>Rascunho inicial para contestar cobrança com prazo superior a 5 anos.</p>
+          <details>
+            <summary>Ver prompt</summary>
+            <pre><code>Atue como advogado especialista em CDC. Redija argumento objetivo para cobrança prescrita (art. 206, §5º, CC). Solicite retirada imediata de anotações e, se aplicável, indenização por danos morais com base em precedentes do TJRS/TJSP.</code></pre>
+          </details>
+        </article>
 
-    <section id="about" class="about">
-      <h2>Sobre o projeto</h2>
-      <p>A <strong>Biblioteca de Prompts</strong> ajuda criadores, social medias, advogados e profissionais a encontrar prompts prontos.</p>
+        <!-- Exemplo 3 -->
+        <article class="card" data-id="p3" data-cat="estudos">
+          <header class="card__head">
+            <h3>Plano de estudos personalizado</h3>
+            <div class="card__actions">
+              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
+              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
+            </div>
+          </header>
+          <p>Crie um cronograma semanal adaptado ao tempo disponível e objetivo do aluno.</p>
+          <details>
+            <summary>Ver prompt</summary>
+            <pre><code>Você é um mentor. Com base em [objetivo] e [horas semanais], crie um plano com metas, checkpoints e materiais gratuitos.</code></pre>
+          </details>
+        </article>
 
-      <h3>🤝 Contribuição & Sugestões</h3>
-      <p>Envie ideias ou feedback para <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a>. Este projeto <strong>não é open source</strong>.</p>
-
-      <h3>📄 Licença</h3>
-      <p>⚠️ <strong>Projeto proprietário.</strong> É proibido copiar, modificar ou redistribuir sem autorização.</p>
-
-      <h3>💰 Apoie via PIX</h3>
-      <p class="donate-note">
-        💜 Se este site te ajudou, considere fazer uma doação — mesmo simbólica — para mantê-lo no ar e sempre atualizado.
-      </p>
-      <div class="pix-box">
-        <div><strong>Chave PIX:</strong> <code id="pixKey">csdesweb@gmail.com</code></div>
-        <button class="btn" id="copyPix">📋 Copiar chave PIX</button>
-        <div class="pix-qr">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=csdesweb@gmail.com" alt="QR Code PIX">
-        </div>
+        <!-- Exemplo 4 -->
+        <article class="card" data-id="p4" data-cat="marketing">
+          <header class="card__head">
+            <h3>Roteiro de vídeo para Reels</h3>
+            <div class="card__actions">
+              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
+              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
+            </div>
+          </header>
+          <p>Estrutura de roteiro curto com gancho, prova e CTA.</p>
+          <details>
+            <summary>Ver prompt</summary>
+            <pre><code>Escreva um roteiro de 30s com: 1) Gancho forte em 3s, 2) 3 bullets de valor, 3) CTA para salvar e seguir. Linguagem simples, direta e enérgica.</code></pre>
+          </details>
+        </article>
       </div>
+    </section>
 
-      <h3>Créditos</h3>
-      <p>Feito por <a href="https://github.com/csilvadesweb" target="_blank">csilvadesweb</a>.</p>
+    <!-- Favoritos -->
+    <section id="favoritos" aria-labelledby="titulo-favoritos">
+      <h2 id="titulo-favoritos">Favoritos</h2>
+      <div id="lista-favoritos" class="grid"></div>
+      <p class="muted" id="vazio-fav">Você ainda não favoritou nenhum prompt.</p>
+    </section>
+
+    <!-- Doação -->
+    <section id="doacao" aria-labelledby="titulo-doacao" class="doacao">
+      <h2 id="titulo-doacao">Apoie o Projeto</h2>
+      <p>💡 Se este site te ajuda, <strong>faça uma doação</strong> para mantê-lo atualizado e no ar.</p>
+      <div class="pix">
+        <div class="pix__info">
+          <p><strong>PIX (e-mail):</strong> <a href="mailto:csdesweb@gmail.com" id="pix-chave">csdesweb@gmail.com</a></p>
+          <div class="pix__botoes">
+            <button class="btn" id="copiar-pix">Copiar PIX</button>
+            <button class="btn ghost doe" data-valor="5">R$ 5</button>
+            <button class="btn ghost doe" data-valor="10">R$ 10</button>
+            <button class="btn ghost doe" data-valor="20">R$ 20</button>
+          </div>
+          <p class="obs">Qualquer valor ajuda. Obrigado! ❤️</p>
+        </div>
+        <img src="./assets/qrcode-pix.png" alt="QR Code para doação via PIX" loading="lazy" width="160" height="160" />
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p>© 2025 Biblioteca de Prompts • <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a></p>
+  <!-- Popup de doação -->
+  <dialog id="dlg-doacao" class="modal">
+    <form method="dialog" class="modal__card">
+      <button class="modal__close" aria-label="Fechar">✕</button>
+      <h3>Gostou dos prompts?</h3>
+      <p>Considere apoiar o projeto para manter tudo <strong>gratuito</strong> e sempre atualizado.</p>
+      <div class="pix__botoes">
+        <button class="btn" id="copiar-pix-modal">Copiar PIX</button>
+        <button class="btn ghost doe" data-valor="5">R$ 5</button>
+        <button class="btn ghost doe" data-valor="10">R$ 10</button>
+        <button class="btn ghost doe" data-valor="20">R$ 20</button>
+      </div>
+      <p class="muted">PIX: <strong id="pix-chave-modal">csdesweb@gmail.com</strong></p>
+    </form>
+  </dialog>
+
+  <!-- Rodapé -->
+  <footer class="rodape">
+    <div class="container rodape__grid">
+      <p>© <span id="ano"></span> CS Prompt — Feito por C.Silva · <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a></p>
+      <nav aria-label="Links utilitários" class="rodape__links">
+        <a href="./sitemap.xml">Sitemap</a>
+        <a href="./robots.txt">Robots</a>
+        <a href="#" id="voltar-topo">Voltar ao topo</a>
+      </nav>
     </div>
   </footer>
 
-  <template id="cardTemplate">
-    <article class="card">
-      <header class="card-head">
-        <h3 class="title"></h3><div class="meta"></div>
-      </header>
-      <div class="tags"></div>
-      <details class="details"><summary>Ver prompt</summary><pre class="prompt"></pre></details>
-      <div class="suggestions"></div>
-      <div class="card-actions">
-        <button class="btn copy">Copiar</button>
-        <button class="btn ghost fav">⭐ Favoritar</button>
-      </div>
-    </article>
-  </template>
-
-  <script src="script.js"></script>
+  <!-- Registro do Service Worker (PWA) -->
   <script>
-  document.addEventListener('click',(e)=>{
-    if(e.target.id==='copyPix'){
-      const key=document.getElementById('pixKey').textContent.trim();
-      navigator.clipboard.writeText(key).then(()=>{
-        e.target.textContent='✅ Copiado!';
-        setTimeout(()=>e.target.textContent='📋 Copiar chave PIX',1500);
-      });
-    }
-  });
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+    });
+  }
   </script>
 </body>
 </html>
