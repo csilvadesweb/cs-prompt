@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Biblioteca de Prompts • Super</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⚡</div>
+      <div>
+        <h1>Biblioteca de Prompts</h1>
+        <p id="count">0 prompts</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="btnTheme" class="btn ghost" title="Alternar tema">🌗 Tema</button>
+      <button id="btnFavView" class="btn ghost" title="Somente favoritos">⭐ Favoritos</button>
+      <button id="btnExport" class="btn ghost" title="Exportar JSON">Exportar</button>
+      <label class="btn ghost filelabel" title="Importar JSON">
+        Importar
+        <input id="fileInput" type="file" accept="application/json" hidden/>
+      </label>
+      <div class="generator">
+        <input id="genQty" type="number" min="1" max="1000" value="50" />
+        <button id="btnGen" class="btn" title="Gerar prompts aleatórios">Gerar</button>
+      </div>
+      <button id="btnClear" class="btn danger" title="Limpar biblioteca">🧹 Limpar</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="persona">Por Persona</button>
+      <button class="tab" data-tab="tema">Por Tema</button>
+      <button class="tab" data-tab="post">Por Post</button>
+    </nav>
+
+    <section class="controls">
+      <div class="search-wrap">
+        <span class="icon">🔎</span>
+        <input id="search" type="search" placeholder="Pesquisar prompts…" autocomplete="off"/>
+      </div>
+
+      <div class="filters">
+        <div class="select">
+          <label id="primaryLabel" for="primarySelect">Todas as Personas</label>
+          <select id="primarySelect"></select>
+        </div>
+
+        <div class="select">
+          <label for="secondarySelect">Todos os Itens</label>
+          <select id="secondarySelect"></select>
+        </div>
+
+        <div class="select">
+          <label for="pageSize">Mostrar</label>
+          <select id="pageSize">
+            <option>10</option>
+            <option>20</option>
+            <option selected>30</option>
+            <option>50</option>
+            <option>100</option>
+          </select>
+        </div>
+
+        <label class="favOnly"><input type="checkbox" id="onlyFav"/> Somente favoritos</label>
+      </div>
+    </section>
+
+    <section id="chips" class="chips"></section>
+
+    <section id="list" class="list" aria-live="polite"></section>
+
+    <footer class="pager">
+      <button id="prev" class="btn" disabled>◀</button>
+      <span id="pageInfo">Página 1</span>
+      <button id="next" class="btn">▶</button>
+    </footer>
+  </main>
+
+  <template id="cardTemplate">
+    <article class="card">
+      <header class="card-head">
+        <h3 class="title"></h3>
+        <div class="meta"></div>
+      </header>
+      <div class="tagrow"></div>
+      <details class="details">
+        <summary>Ver prompt</summary>
+        <pre class="prompt"></pre>
+      </details>
+      <div class="card-actions">
+        <button class="btn copy">Copiar</button>
+        <button class="btn ghost similar">Parecidos</button>
+        <button class="btn ghost fav">⭐ Favoritar</button>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
