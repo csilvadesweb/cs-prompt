@@ -5,63 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CS Prompt — Biblioteca de Prompts Premium</title>
 
-  <!-- SEO básico -->
+  <!-- SEO -->
   <meta name="description" content="Biblioteca de prompts premium para IA, produtividade, estudos e advocacia consumerista. Rápido, responsivo e otimizado para SEO." />
-  <meta name="keywords" content="prompts, inteligência artificial, chatgpt, produtividade, advocacia, automação, estudos" />
-  <meta name="author" content="C.Silva" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://csilvadesweb.github.io/cs-prompt/" />
   <meta name="theme-color" content="#0ea5e9" />
 
-  <!-- Open Graph / Twitter -->
+  <!-- OG/Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="CS Prompt — Biblioteca de Prompts Premium" />
-  <meta property="og:description" content="Prompts prontos e organizados para IA, produtividade e estudos. Se o site te ajuda, considere apoiar por PIX." />
+  <meta property="og:description" content="Prompts prontos e organizados para IA, produtividade e estudos." />
   <meta property="og:url" content="https://csilvadesweb.github.io/cs-prompt/" />
-  <meta property="og:image" content="./assets/preview.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Ícones -->
-  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-
-  <!-- PWA -->
-  <link rel="manifest" href="./manifest.webmanifest" />
-
-  <!-- CSS e JS -->
+  <!-- Preloads -->
   <link rel="preload" href="./style.css" as="style" />
   <link rel="stylesheet" href="./style.css" />
-  <script defer src="./script.js"></script>
+  <link rel="preload" href="./script.js" as="script" />
 
-  <!-- Dados estruturados -->
+  <!-- Estruturado -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "CS Prompt — Biblioteca de Prompts Premium",
-    "url": "https://csilvadesweb.github.io/cs-prompt/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://csilvadesweb.github.io/cs-prompt/?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "CS Prompt",
-    "url": "https://csilvadesweb.github.io/cs-prompt/",
-    "email": "csdesweb@gmail.com",
-    "logo": "https://csilvadesweb.github.io/cs-prompt/assets/icon-192.png"
-  }
+  {"@context":"https://schema.org","@type":"WebSite","name":"CS Prompt — Biblioteca de Prompts Premium","url":"https://csilvadesweb.github.io/cs-prompt/","potentialAction":{"@type":"SearchAction","target":"https://csilvadesweb.github.io/cs-prompt/?q={search_term_string}","query-input":"required name=search_term_string"}}
   </script>
 </head>
 <body>
   <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
-  <!-- Topo -->
   <header class="topo" role="banner">
     <div class="container topo__grid">
       <h1 class="site-title">CS Prompt</h1>
@@ -78,10 +46,9 @@
   </header>
 
   <main id="conteudo" class="container">
-    <!-- Hero -->
     <section class="hero" aria-label="Introdução">
       <h2>Biblioteca de Prompts Premium</h2>
-      <p>Prompts prontos e organizados para IA, produtividade, estudos e advocacia consumerista. <strong>Rápido, responsivo, com favoritos e modo offline.</strong></p>
+      <p>Prompts prontos e organizados para IA, produtividade, estudos e advocacia. <strong>Leve, rápido e com favoritos.</strong></p>
       <form id="busca" role="search" aria-label="Buscar prompts">
         <label for="q" class="sr-only">Buscar</label>
         <input id="q" name="q" type="search" placeholder="Buscar prompts…" inputmode="search" autocomplete="off" />
@@ -90,7 +57,6 @@
       <p class="muted" id="resultado-contagem" aria-live="polite"></p>
     </section>
 
-    <!-- Categorias -->
     <section id="categorias" aria-labelledby="titulo-categorias">
       <h2 id="titulo-categorias">Categorias</h2>
       <div class="chips" role="list" aria-label="Filtros de categoria">
@@ -102,84 +68,18 @@
       </div>
     </section>
 
-    <!-- Lista de Prompts -->
     <section id="prompts" aria-labelledby="titulo-prompts">
       <h2 id="titulo-prompts">Prompts</h2>
-      <div id="lista-prompts" class="grid">
-        <!-- Exemplo 1 -->
-        <article class="card" data-id="p1" data-cat="produtividade">
-          <header class="card__head">
-            <h3>Resumo inteligente de reuniões</h3>
-            <div class="card__actions">
-              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
-              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
-            </div>
-          </header>
-          <p>Gere um resumo com tópicos, decisões e próximos passos a partir de uma transcrição.</p>
-          <details>
-            <summary>Ver prompt</summary>
-            <pre><code>Atue como secretária executiva. A partir do texto abaixo, gere um resumo em tópicos com: decisões, responsáveis, prazos e riscos. Padronize datas no formato DD/MM/AAAA.</code></pre>
-          </details>
-        </article>
-
-        <!-- Exemplo 2 -->
-        <article class="card" data-id="p2" data-cat="advocacia">
-          <header class="card__head">
-            <h3>Contestação de cobrança prescrita</h3>
-            <div class="card__actions">
-              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
-              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
-            </div>
-          </header>
-          <p>Rascunho inicial para contestar cobrança com prazo superior a 5 anos.</p>
-          <details>
-            <summary>Ver prompt</summary>
-            <pre><code>Atue como advogado especialista em CDC. Redija argumento objetivo para cobrança prescrita (art. 206, §5º, CC). Solicite retirada imediata de anotações e, se aplicável, indenização por danos morais com base em precedentes do TJRS/TJSP.</code></pre>
-          </details>
-        </article>
-
-        <!-- Exemplo 3 -->
-        <article class="card" data-id="p3" data-cat="estudos">
-          <header class="card__head">
-            <h3>Plano de estudos personalizado</h3>
-            <div class="card__actions">
-              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
-              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
-            </div>
-          </header>
-          <p>Crie um cronograma semanal adaptado ao tempo disponível e objetivo do aluno.</p>
-          <details>
-            <summary>Ver prompt</summary>
-            <pre><code>Você é um mentor. Com base em [objetivo] e [horas semanais], crie um plano com metas, checkpoints e materiais gratuitos.</code></pre>
-          </details>
-        </article>
-
-        <!-- Exemplo 4 -->
-        <article class="card" data-id="p4" data-cat="marketing">
-          <header class="card__head">
-            <h3>Roteiro de vídeo para Reels</h3>
-            <div class="card__actions">
-              <button class="btn icon btn-copy" title="Copiar prompt" aria-label="Copiar prompt">📋</button>
-              <button class="btn icon btn-fav" title="Favoritar" aria-label="Favoritar">★</button>
-            </div>
-          </header>
-          <p>Estrutura de roteiro curto com gancho, prova e CTA.</p>
-          <details>
-            <summary>Ver prompt</summary>
-            <pre><code>Escreva um roteiro de 30s com: 1) Gancho forte em 3s, 2) 3 bullets de valor, 3) CTA para salvar e seguir. Linguagem simples, direta e enérgica.</code></pre>
-          </details>
-        </article>
-      </div>
+      <div id="lista-prompts" class="grid" aria-live="polite"></div>
+      <p id="estado" class="muted" hidden>Carregando…</p>
     </section>
 
-    <!-- Favoritos -->
     <section id="favoritos" aria-labelledby="titulo-favoritos">
       <h2 id="titulo-favoritos">Favoritos</h2>
       <div id="lista-favoritos" class="grid"></div>
       <p class="muted" id="vazio-fav">Você ainda não favoritou nenhum prompt.</p>
     </section>
 
-    <!-- Doação -->
     <section id="doacao" aria-labelledby="titulo-doacao" class="doacao">
       <h2 id="titulo-doacao">Apoie o Projeto</h2>
       <p>💡 Se este site te ajuda, <strong>faça uma doação</strong> para mantê-lo atualizado e no ar.</p>
@@ -194,7 +94,10 @@
           </div>
           <p class="obs">Qualquer valor ajuda. Obrigado! ❤️</p>
         </div>
-        <img src="./assets/qrcode-pix.png" alt="QR Code para doação via PIX" loading="lazy" width="160" height="160" />
+        <!-- Fallback automático do QR se a imagem local não existir -->
+        <img id="qr-pix" src="./assets/qrcode-pix.png" alt="QR Code para doação via PIX"
+             loading="lazy" width="160" height="160"
+             onerror="this.onerror=null;this.src=`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(document.getElementById('pix-chave').textContent.trim())}`;">
       </div>
     </section>
   </main>
@@ -215,7 +118,6 @@
     </form>
   </dialog>
 
-  <!-- Rodapé -->
   <footer class="rodape">
     <div class="container rodape__grid">
       <p>© <span id="ano"></span> CS Prompt — Feito por C.Silva · <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a></p>
@@ -227,13 +129,6 @@
     </div>
   </footer>
 
-  <!-- Registro do Service Worker (PWA) -->
-  <script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-    });
-  }
-  </script>
+  <script defer src="./script.js"></script>
 </body>
 </html>
