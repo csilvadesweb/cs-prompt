@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Biblioteca de Prompts • Super</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Biblioteca de Prompts — Super</title>
   <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Biblioteca de prompts por Persona, Tema e Tipo de Post — com favoritos, modo escuro/claro e importação/exportação.">
 </head>
 <body>
   <header class="topbar">
@@ -15,20 +16,26 @@
         <p id="count">0 prompts</p>
       </div>
     </div>
-    <div class="actions">
-      <button id="btnTheme" class="btn ghost" title="Alternar tema">🌗 Tema</button>
-      <button id="btnFavView" class="btn ghost" title="Somente favoritos">⭐ Favoritos</button>
+
+    <nav class="actions">
+      <button id="btnToggleTheme" class="btn ghost" title="Alternar tema">🌗 Tema</button>
+      <a href="#/" class="btn ghost">Explorar</a>
+      <a href="#/favoritos" class="btn ghost">⭐ Favoritos</a>
+      <a href="#/sobre" class="btn ghost">ℹ️ Sobre</a>
+
       <button id="btnExport" class="btn ghost" title="Exportar JSON">Exportar</button>
       <label class="btn ghost filelabel" title="Importar JSON">
         Importar
-        <input id="fileInput" type="file" accept="application/json" hidden/>
+        <input id="fileInput" type="file" accept="application/json" hidden>
       </label>
+
       <div class="generator">
         <input id="genQty" type="number" min="1" max="1000" value="50" />
         <button id="btnGen" class="btn" title="Gerar prompts aleatórios">Gerar</button>
       </div>
+
       <button id="btnClear" class="btn danger" title="Limpar biblioteca">🧹 Limpar</button>
-    </div>
+    </nav>
   </header>
 
   <main class="container">
@@ -41,7 +48,7 @@
     <section class="controls">
       <div class="search-wrap">
         <span class="icon">🔎</span>
-        <input id="search" type="search" placeholder="Pesquisar prompts…" autocomplete="off"/>
+        <input id="search" type="search" placeholder="Pesquisar prompts…" autocomplete="off">
       </div>
 
       <div class="filters">
@@ -65,8 +72,6 @@
             <option>100</option>
           </select>
         </div>
-
-        <label class="favOnly"><input type="checkbox" id="onlyFav"/> Somente favoritos</label>
       </div>
     </section>
 
@@ -79,7 +84,54 @@
       <span id="pageInfo">Página 1</span>
       <button id="next" class="btn">▶</button>
     </footer>
+
+    <!-- SOBRE, CRÉDITOS, LICENÇA E PIX -->
+    <section id="about" class="about">
+      <h2>Sobre o projeto</h2>
+      <p>
+        A <strong>Biblioteca de Prompts</strong> organiza prompts por <em>Persona</em>, <em>Tema</em> e <em>Tipo de Post</em>.
+        Recursos: modo claro/escuro, favoritos, tags, busca com realce, importar/exportar JSON e gerador aleatório.
+      </p>
+
+      <h3>Contribuição & Sugestões</h3>
+      <p>
+        Envie ideias ou feedback para
+        <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a>.
+        Este projeto <strong>não é open source</strong> — o uso é restrito.
+      </p>
+
+      <h3>Licença</h3>
+      <p>
+        ⚠️ <strong>Projeto proprietário.</strong> Código, design e prompts protegidos por Copyright.
+        É proibido copiar, modificar, redistribuir ou usar sem autorização por escrito.
+      </p>
+
+      <h3>💰 Apoie via PIX</h3>
+      <p>Se esta biblioteca te ajuda, considere apoiar:</p>
+      <div class="pix-box">
+        <div><strong>Chave PIX:</strong> <code id="pixKey">csdesweb@gmail.com</code></div>
+        <button class="btn" id="copyPix">📋 Copiar chave PIX</button>
+      </div>
+
+      <h3>Créditos</h3>
+      <p>
+        Feito por <a href="https://github.com/csilvadesweb" target="_blank" rel="noopener">csilvadesweb</a>.
+        Licença proprietária. Contato: <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a>.
+      </p>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© 2025 Biblioteca de Prompts • <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a></p>
+      <nav class="footer-links">
+        <a href="#/">Início</a>
+        <a href="#/favoritos">Favoritos</a>
+        <a href="#/sobre">Sobre</a>
+        <a href="https://github.com/csilvadesweb" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </footer>
 
   <template id="cardTemplate">
     <article class="card">
@@ -87,19 +139,35 @@
         <h3 class="title"></h3>
         <div class="meta"></div>
       </header>
-      <div class="tagrow"></div>
+
+      <div class="tags"></div>
+
       <details class="details">
         <summary>Ver prompt</summary>
         <pre class="prompt"></pre>
       </details>
+
+      <div class="suggestions"></div>
+
       <div class="card-actions">
         <button class="btn copy">Copiar</button>
-        <button class="btn ghost similar">Parecidos</button>
         <button class="btn ghost fav">⭐ Favoritar</button>
       </div>
     </article>
   </template>
 
   <script src="script.js"></script>
+  <script>
+    // copiar chave PIX
+    document.addEventListener('click', (e)=>{
+      if(e.target && e.target.id==='copyPix'){
+        const key = document.getElementById('pixKey').textContent.trim();
+        navigator.clipboard.writeText(key).then(()=>{
+          e.target.textContent = '✅ Copiado!';
+          setTimeout(()=> e.target.textContent = '📋 Copiar chave PIX', 1500);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
