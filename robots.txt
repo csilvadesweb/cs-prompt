@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://csilvadesweb.github.io/cs-prompt/sitemap.xml
