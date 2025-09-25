@@ -1,25 +1,84 @@
 {
   "prompts": [
     {
-      "id": "mkt_001",
-      "title": "Plano de conteúdo 30 dias",
-      "category": "marketing",
-      "summary": "Organize por funil.",
-      "content": "Crie um calendário de 30 dias com posts topo, meio e fundo para [nicho], incluindo objetivo, CTA e métrica."
+      "id": "prod_001",
+      "title": "Checklist matinal para alta performance",
+      "category": "produtividade",
+      "summary": "Organize o dia logo cedo.",
+      "content": "Gere um checklist matinal de 5 passos para iniciar o dia com foco: revisar agenda, definir top 3 prioridades, preparar ambiente, planejar pausas e checar metas da semana."
     },
     {
-      "id": "mkt_002",
-      "title": "Copy para anúncio (dor/ganho)",
-      "category": "marketing",
-      "summary": "3 variações de anúncio.",
-      "content": "Escreva 3 cópias de anúncio para [produto], uma focada em dor, outra em ganho e outra em prova social, com CTA claro."
+      "id": "prod_002",
+      "title": "Regra dos 2 minutos",
+      "category": "produtividade",
+      "summary": "Elimine microtarefas.",
+      "content": "Liste tarefas que levam menos de 2 minutos e crie um plano para executá-las imediatamente antes de iniciar trabalhos maiores."
     },
     {
-      "id": "mkt_003",
-      "title": "Estratégia de lançamento 7 dias",
-      "category": "marketing",
-      "summary": "Pré, lançamento, pós.",
-      "content": "Monte um plano de 7 dias: 3 de pré-lançamento (teasers), 2 de lançamento (ofertas) e 2 de pós (provas e reativações)."
+      "id": "prod_003",
+      "title": "Revisão semanal GTD",
+      "category": "produtividade",
+      "summary": "Feche ciclos e planeje a semana.",
+      "content": "Crie um roteiro de revisão semanal (GTD): esvaziar inbox, atualizar projetos, próximas ações, esperar por, algum dia/talvez e planejar próximos 7 dias."
+    },
+    {
+      "id": "prod_004",
+      "title": "Pomodoro otimizado (4×25)",
+      "category": "produtividade",
+      "summary": "Foco em blocos curtos.",
+      "content": "Monte 4 ciclos de 25/5 com uma pausa longa de 20 minutos ao final; inclua sugestão de tarefas por ciclo e critério de interrupções."
+    },
+    {
+      "id": "prod_005",
+      "title": "Mapa mental do dia",
+      "category": "produtividade",
+      "summary": "Visualize áreas e tarefas.",
+      "content": "Crie um mapa mental com ramos: trabalho, estudos, saúde, casa, urgências e recados. Liste 2–4 tarefas por ramo e ordem sugerida."
+    },
+    {
+      "id": "prod_006",
+      "title": "Matriz de Eisenhower",
+      "category": "produtividade",
+      "summary": "Urgente vs. importante.",
+      "content": "Classifique tarefas em 4 quadrantes (fazer, agendar, delegar, eliminar) e proponha a sequência do dia."
+    },
+    {
+      "id": "prod_007",
+      "title": "Plano mensal 80/20",
+      "category": "produtividade",
+      "summary": "Foque no impacto.",
+      "content": "Identifique as 20% atividades que geram 80% dos resultados e crie metas mensais com entregáveis e métricas claras."
+    },
+    {
+      "id": "prod_008",
+      "title": "Rotina de fechamento do dia",
+      "category": "produtividade",
+      "summary": "Descompressão e preparo.",
+      "content": "Escreva um ritual de 10–15 min: revisar o que foi feito, agradecer/registrar aprendizados, planejar a primeira tarefa do dia seguinte e organizar mesa."
+    },
+    {
+      "id": "prod_009",
+      "title": "Automatização de tarefas repetitivas",
+      "category": "produtividade",
+      "summary": "Economize tempo.",
+      "content": "Sugira 5 automações com apps (Google Sheets, Zapier/Make, IFTTT, atalhos) para relatórios, backups, lembretes e planilhas."
+    },
+    {
+      "id": "prod_010",
+      "title": "Organização digital minimalista",
+      "category": "produtividade",
+      "summary": "Menos atrito, mais foco.",
+      "content": "Crie um guia: estrutura de pastas simples, nomeação YYYY-MM-DD, 3 caixas de e-mail (inbox/ação/arquivo) e redução de notificações."
+    },
+
+    // (...) CONTINUA ATÉ "prod_100"
+
+    {
+      "id": "prod_100",
+      "title": "Revisão semanal de hábitos e metas",
+      "category": "produtividade",
+      "summary": "Fechamento + replanejamento.",
+      "content": "Faça uma revisão de hábitos e metas: aderência, resultados, lições e ajustes para a próxima semana."
     }
   ]
 }
