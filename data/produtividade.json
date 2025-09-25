@@ -1,0 +1,25 @@
+{
+  "prompts": [
+    {
+      "id": "mkt_001",
+      "title": "Plano de conteúdo 30 dias",
+      "category": "marketing",
+      "summary": "Organize por funil.",
+      "content": "Crie um calendário de 30 dias com posts topo, meio e fundo para [nicho], incluindo objetivo, CTA e métrica."
+    },
+    {
+      "id": "mkt_002",
+      "title": "Copy para anúncio (dor/ganho)",
+      "category": "marketing",
+      "summary": "3 variações de anúncio.",
+      "content": "Escreva 3 cópias de anúncio para [produto], uma focada em dor, outra em ganho e outra em prova social, com CTA claro."
+    },
+    {
+      "id": "mkt_003",
+      "title": "Estratégia de lançamento 7 dias",
+      "category": "marketing",
+      "summary": "Pré, lançamento, pós.",
+      "content": "Monte um plano de 7 dias: 3 de pré-lançamento (teasers), 2 de lançamento (ofertas) e 2 de pós (provas e reativações)."
+    }
+  ]
+}
