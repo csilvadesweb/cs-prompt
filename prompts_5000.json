@@ -1,36 +1,75 @@
 {
   "prompts": [
-    { "id":"p1", "title":"Resumo inteligente de reuniões", "category":"produtividade", "summary":"Decisões, responsáveis e prazos.", "content":"Atue como secretária executiva. Gere um resumo com: decisões, responsáveis, prazos e riscos. Padronize datas DD/MM/AAAA." },
-    { "id":"p2", "title":"Contestação de cobrança prescrita", "category":"advocacia", "summary":"Base legal objetiva.", "content":"Atue como advogado especialista em CDC. Conteste cobrança prescrita (art. 206, §5º, CC). Requeira retirada de anotações e, se cabível, danos morais." },
-    { "id":"p3", "title":"Plano de estudos personalizado", "category":"estudos", "summary":"Cronograma por metas.", "content":"Você é mentor. Com [objetivo] e [horas/semana], crie plano com metas, checkpoints e materiais gratuitos." },
-    { "id":"p4", "title":"Roteiro de Reels 30s", "category":"marketing", "summary":"Gancho + valor + CTA.", "content":"Escreva roteiro de 30s: (1) Gancho 3s, (2) 3 bullets de valor, (3) CTA para salvar e seguir." },
-    { "id":"p5", "title":"Checklist de SEO on-page", "category":"seo", "summary":"Título, meta, H1-H3, links.", "content":"Gere checklist on-page para [tema]: title, meta description, H1-H3, links internos, schema, FAQs." },
-    { "id":"p6", "title":"Copy para página de vendas", "category":"copywriting", "summary":"Headline, benefícios, prova, CTA.", "content":"Crie página de vendas com headline, promessa, bullets, prova social, garantia e 2 CTAs." },
-    { "id":"p7", "title":"Calendário editorial Instagram", "category":"instagram", "summary":"30 dias de posts.", "content":"Crie calendário de 30 dias para [nicho] com ideia, legenda sugerida, formato e CTA." },
-    { "id":"p8", "title":"Roteiro YouTube 8-10min", "category":"youtube", "summary":"Abertura, tópicos, CTA.", "content":"Roteiro com abertura (promessa), 4-6 tópicos com exemplos, CTA e fechamento." },
-    { "id":"p9", "title":"Atendimento empático no WhatsApp", "category":"whatsapp", "summary":"Tom humano e objetivo.", "content":"Responda cliente irritado: reconhecer, propor solução em 3 passos, confirmar satisfação." },
-    { "id":"p10", "title":"Funil de e-commerce", "category":"ecommerce", "summary":"Topo, meio e fundo.", "content":"Estratégia para loja [segmento]: conteúdos topo/meio/fundo, ofertas e remarketing." },
-
-    { "id":"p11", "title":"Sequência de follow-up", "category":"vendas", "summary":"5 mensagens com espaçamento.", "content":"Escreva 5 follow-ups (2/3/5/7/10 dias) com novos ângulos de valor e CTA leve." },
-    { "id":"p12", "title":"Onboarding de cliente (SaaS)", "category":"atendimento", "summary":"Passos e métricas.", "content":"Onboarding 14 dias: objetivos, mensagens de ativação, marcos e métricas." },
-    { "id":"p13", "title":"Planejamento financeiro pessoal", "category":"finanças", "summary":"50/30/20 + metas SMART.", "content":"Plano mensal 50/30/20, metas SMART, fundo de emergência e cortes inteligentes." },
-    { "id":"p14", "title":"Estratégia de conteúdo para blog", "category":"blog", "summary":"Pilares + 12 títulos por pilar.", "content":"Sugira 4 pilares e 12 títulos por pilar (intenção de busca + estrutura H2/H3)." },
-    { "id":"p15", "title":"Checklist de release DevOps", "category":"devops", "summary":"Versionamento, testes, rollback.", "content":"Checklist: versionamento, changelog, testes, rollback, observabilidade e comunicação." },
-    { "id":"p16", "title":"Esqueleto de contrato simples", "category":"contratos", "summary":"Cláusulas essenciais.", "content":"Estrutura: escopo, prazo, pagamento, confidencialidade, PI, rescisão, foro." },
-    { "id":"p17", "title":"Briefing de design", "category":"design", "summary":"Tom, paleta, tipografia.", "content":"Briefing: público, atributos da marca, paleta (HEX), tipografia, referências e entregáveis." },
-    { "id":"p18", "title":"Trilha de programação (12 semanas)", "category":"programação", "summary":"Front ou Back com projetos.", "content":"Trilha de 12 semanas para [front/back] com metas, projetos e avaliação." },
-    { "id":"p19", "title":"Roteiro de podcast", "category":"podcast", "summary":"Estrutura e perguntas.", "content":"Roteiro para episódio: abertura, pauta, perguntas, transições e encerramento com CTA." },
-    { "id":"p20", "title":"Política de privacidade básica", "category":"legal", "summary":"Coleta, uso e direitos.", "content":"Redija política de privacidade: dados coletados, finalidade, base legal, direitos e contato." },
-
-    { "id":"p21", "title":"OKRs trimestrais", "category":"gestão", "summary":"3 objetivos + KRs claros.", "content":"Defina 3 OKRs para [time], com 3-5 resultados-chave mensuráveis por objetivo." },
-    { "id":"p22", "title":"Script de atendimento (SAC)", "category":"suporte", "summary":"Abertura, diagnóstico, solução.", "content":"Crie script com abertura empática, 3 perguntas de diagnóstico, solução e confirmação." },
-    { "id":"p23", "title":"Roteiro de anúncio (Facebook/Instagram)", "category":"publicidade", "summary":"Criativo, copy e CTA.", "content":"Escreva 3 variações de anúncio com ângulos diferentes, copy curta, criativo e CTA." },
-    { "id":"p24", "title":"Calendário de e-mails (30 dias)", "category":"email", "summary":"Nutrição e oferta.", "content":"Planeje 8-10 e-mails: valor, prova social, estudos de caso e 2 ofertas com CTA." },
-    { "id":"p25", "title":"Plano de lançamento (7 dias)", "category":"marketing", "summary":"Pré, lançamento e pós.", "content":"Plano: 3 dias de pré-lançamento, 2 de lançamento, 2 de pós com métricas." },
-    { "id":"p26", "title":"Roteiro de vídeo de vendas (VSL)", "category":"vendas", "summary":"Dor, solução, prova, oferta.", "content":"Escreva VSL de 5-7 min com dor, solução, prova social, bônus, garantia e CTA." },
-    { "id":"p27", "title":"Modelo de petição inicial", "category":"advocacia", "summary":"Estrutura padrão.", "content":"Monte petição inicial com qualificação, fatos, fundamentos, pedidos, provas e valor da causa." },
-    { "id":"p28", "title":"Resposta à contestação", "category":"advocacia", "summary":"Tese e refutação.", "content":"Rebata argumentos centrais, destaque jurisprudência e reforce pedidos." },
-    { "id":"p29", "title":"Planejamento de estudos ENEM", "category":"estudos", "summary":"12 semanas.", "content":"Crie plano de 12 semanas por área, simulados e revisão espaçada." },
-    { "id":"p30", "title":"Roadmap de produto (90 dias)", "category":"gestão", "summary":"Backlog priorizado.", "content":"Monte roadmap com 3 temas, épicos e critérios de sucesso trimestrais." }
+    {
+      "id": "prod_001",
+      "title": "Checklist matinal para alta performance",
+      "category": "produtividade",
+      "summary": "Organize o dia logo cedo.",
+      "content": "Crie um checklist matinal de 5 passos para começar o dia com foco: revisar agenda, definir top 3 prioridades, planejar pausas, preparar ambiente de trabalho e revisar metas semanais."
+    },
+    {
+      "id": "prod_002",
+      "title": "Regra dos 2 minutos",
+      "category": "produtividade",
+      "summary": "Tarefas rápidas primeiro.",
+      "content": "Liste tarefas que podem ser feitas em menos de 2 minutos e crie um plano para executá-las imediatamente antes de iniciar atividades mais complexas."
+    },
+    {
+      "id": "prod_003",
+      "title": "Revisão semanal GTD",
+      "category": "produtividade",
+      "summary": "Organize tudo de forma clara.",
+      "content": "Gere um roteiro de revisão semanal baseado em GTD, incluindo: limpar inbox, revisar projetos, atualizar listas de próxima ação e planejar próximos 7 dias."
+    },
+    {
+      "id": "prod_004",
+      "title": "Pomodoro otimizado",
+      "category": "produtividade",
+      "summary": "Blocos de foco eficazes.",
+      "content": "Crie uma programação usando a técnica Pomodoro (25 min foco / 5 min pausa), adaptando para 4 ciclos e uma pausa longa de 20 min."
+    },
+    {
+      "id": "prod_005",
+      "title": "Mapa mental do dia",
+      "category": "produtividade",
+      "summary": "Visualize suas tarefas.",
+      "content": "Peça para gerar um mapa mental das atividades do dia com ramos para trabalho, estudos, saúde, lazer e urgências."
+    },
+    {
+      "id": "prod_006",
+      "title": "Matriz de Eisenhower",
+      "category": "produtividade",
+      "summary": "Urgente vs Importante.",
+      "content": "Classifique suas tarefas nas 4 quadrantes da matriz de Eisenhower (Urgente/Importante, Importante/Não urgente, etc.) e sugira ordem de execução."
+    },
+    {
+      "id": "prod_007",
+      "title": "Planejamento mensal 80/20",
+      "category": "produtividade",
+      "summary": "Foque no que gera mais resultado.",
+      "content": "Crie um plano mensal priorizando as 20% de atividades que geram 80% dos resultados. Liste metas e entregáveis claros."
+    },
+    {
+      "id": "prod_008",
+      "title": "Rotina de final de dia",
+      "category": "produtividade",
+      "summary": "Feche o dia bem.",
+      "content": "Elabore uma rotina de encerramento do dia: revisar o que foi feito, planejar o dia seguinte, organizar mesa e registrar aprendizados."
+    },
+    {
+      "id": "prod_009",
+      "title": "Automatização de tarefas repetitivas",
+      "category": "produtividade",
+      "summary": "Poupe tempo com automação.",
+      "content": "Liste automações possíveis no dia a dia usando Google Sheets, Zapier, IFTTT ou scripts simples para reduzir tarefas manuais."
+    },
+    {
+      "id": "prod_010",
+      "title": "Organização digital minimalista",
+      "category": "produtividade",
+      "summary": "Menos distrações.",
+      "content": "Crie um plano para organizar arquivos, e-mails e aplicativos, aplicando o conceito de 'inbox zero' e eliminando notificações desnecessárias."
+    }
+    // ... Continue adicionando até prod_100
   ]
 }
