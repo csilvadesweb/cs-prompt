@@ -21,18 +21,42 @@ $('#ano').textContent=new Date().getFullYear();
 function setEstado(t,show=true){ const e=$('#estado'); if(!e) return; e.textContent=t; e.hidden=!show; }
 function toast(msg){
   let el=$('#toast'); if(!el){ el=document.createElement('div'); el.id='toast';
-    Object.assign(el.style,{position:'fixed',left:'50%',bottom:'24px',transform:'translateX(-50%)',background:'rgba(0,0,0,.85)',color:'#fff',padding:'10px 14px',borderRadius:'10px',zIndex:'9999',fontSize:'14px',boxShadow:'0 6px 20px rgba(0,0,0,.3)'}); document.body.appendChild(el); }
-  el.textContent=msg; el.style.opacity='1'; setTimeout(()=>{el.style.transition='opacity .4s';el.style.opacity='0';},1600);
+    Object.assign(el.style,{position:'fixed',left:'50%',bottom:'24px',transform:'translateX(-50%)',background:'rgba(0,0,0,.85)',color:'#fff',padding:'10px 14px',borderRadius:'10px',zIndex:'9999',fontSize:'14px',boxShadow:'0 6px 20px rgba(0,0,0,.3)'});
+    document.body.appendChild(el);
+  }
+  el.textContent=msg; el.style.opacity='1'; setTimeout(()=>{ el.style.transition='opacity .4s'; el.style.opacity='0'; },1600);
 }
 
 // PIX & Doação
 const PIX='csdesweb@gmail.com';
 $('#pix-chave').textContent=PIX; $('#pix-chave-modal').textContent=PIX;
+
+function gerarQR(conteudo){
+  const el=$('#qr-pix');
+  el.src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(conteudo)}`;
+}
+
 $('#copiar-pix').addEventListener('click',()=>navigator.clipboard.writeText(PIX).then(()=>toast('Chave PIX copiada!')));
 $('#copiar-pix-modal').addEventListener('click',(e)=>{e.preventDefault();navigator.clipboard.writeText(PIX).then(()=>toast('Chave PIX copiada!'));});
-$$('.doe').forEach(b=>b.addEventListener('click',()=>toast(`Obrigado! Doe R$ ${b.dataset.valor}.`)));
+$$('.doe').forEach(b=>b.addEventListener('click',()=>toast(`Obrigado! Doe R$ ${b.dataset.valor} no app do seu banco.`)));
+
+$('#btnGerarQR').addEventListener('click',(e)=>{
+  e.preventDefault();
+  const v=parseInt($('#valorCustom').value,10);
+  if(!isNaN(v) && v>0){
+    // conteúdo simples: chave + valor (apps de banco aceitam leitura de QR com texto)
+    gerarQR(`PIX:${PIX} | Valor: R$ ${v}`);
+    toast(`QR atualizado para R$ ${v}`);
+  }else{
+    gerarQR(PIX);
+    toast('QR gerado para a chave PIX');
+  }
+});
+
+// Modal de doação (aparece ao copiar prompt)
 const dlg=$('#dlg-doacao'); $('.modal__close',dlg).addEventListener('click',()=>dlg.close());
-setTimeout(()=>{ if(!sessionStorage.getItem('cs_doacao_popup')){ try{dlg.showModal();}catch{} sessionStorage.setItem('cs_doacao_popup','1'); }},30000);
+function openDoacao(){ try{ dlg.showModal(); }catch{} }
+setTimeout(()=>{ if(!sessionStorage.getItem('cs_doacao_popup')){ openDoacao(); sessionStorage.setItem('cs_doacao_popup','1'); } },30000);
 
 // Voltar topo
 $('#voltar-topo').addEventListener('click',e=>{e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
@@ -57,7 +81,10 @@ function copyPromptFromCard(card){
   const code=card.querySelector('pre code'); if(!code) return;
   navigator.clipboard.writeText(code.innerText.trim()).then(()=>{
     toast('Prompt copiado!');
-    if(!sessionStorage.getItem('cs_doacao_popup')){ setTimeout(()=>{try{dlg.showModal();}catch{}},300); sessionStorage.setItem('cs_doacao_popup','1'); }
+    if(!sessionStorage.getItem('cs_doacao_popup')){
+      setTimeout(openDoacao,300);
+      sessionStorage.setItem('cs_doacao_popup','1');
+    }
   });
 }
 
@@ -134,12 +161,10 @@ function applyFiltersAndRender(){
   const sel=currentSelectedCategory();
   let pool=[];
   if(sel==='todas'){
-    // junta as categorias já carregadas
     LOADED_BY_CAT.forEach(v=>pool=pool.concat(v));
   }else{
     pool = LOADED_BY_CAT.get(sel) || [];
   }
-  // filtro + ordenação
   CURRENT_VIEW = pool.filter(p=>{
     const okCat = sel==='todas' || p.category===sel;
     const txt = (p.title+' '+(p.summary||'')+' '+p.content).toLowerCase();
@@ -151,7 +176,6 @@ function applyFiltersAndRender(){
     if(ord==='categoria') return (a.category||'').localeCompare(b.category||'') || a.title.localeCompare(b.title);
     return a.title.localeCompare(b.title);
   });
-  // paginação
   PAGE=0; lista.innerHTML=''; renderPage();
   contagem.textContent = CURRENT_VIEW.length ? `${CURRENT_VIEW.length} prompt(s) encontrados` : 'Nenhum prompt encontrado.';
   syncFavButtons(); renderFavoritos();
@@ -178,14 +202,13 @@ $('#carregar-todas').addEventListener('click', async ()=>{
   setEstado('Carregando todas as categorias…', true);
   for(const cat of CATEGORIES_INDEX){ await loadCategory(cat); }
   setEstado('', false);
-  // Seleciona "todas"
   $$('.chip',chips).forEach(c=>c.classList.remove('is-active')); $('.chip',chips)?.classList.add('is-active');
   applyFiltersAndRender(); toast('Todas as categorias carregadas!');
 });
 
-// ===== Inicialização: ler o índice de categorias e carregar a primeira =====
+// ===== Inicialização =====
 (async function init(){
-  // 1) Lê categories.json
+  // Lê categories.json
   const base=(location.pathname.endsWith('/')?location.pathname:location.pathname.replace(/[^/]+$/,''));
   const idxUrl=new URL('categories.json', location.origin+base).toString();
   try{
@@ -198,7 +221,7 @@ $('#carregar-todas').addEventListener('click', async ()=>{
   }
   renderChips();
 
-  // 2) Carrega automaticamente a primeira categoria do índice
+  // Carrega automaticamente a primeira categoria
   const first = CATEGORIES_INDEX[0] || 'produtividade';
   await loadCategory(first);
   applyFiltersAndRender();
