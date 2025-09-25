@@ -4,21 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CS Prompt — Biblioteca de Prompts Premium</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Biblioteca de prompts premium para IA, produtividade, advocacia, marketing, programação e mais. Leve, rápida, com favoritos e busca." />
+  <meta name="description" content="Biblioteca de prompts premium para IA, produtividade, advocacia, marketing, programação e muito mais." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://csilvadesweb.github.io/cs-prompt/" />
   <meta name="theme-color" content="#0ea5e9" />
-
-  <!-- Estilos -->
   <link rel="preload" href="./style.css" as="style" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <a class="skip" href="#conteudo">Pular para o conteúdo principal</a>
-
-  <!-- Topo -->
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
   <header class="topo" role="banner">
     <div class="container topo__grid">
       <h1 class="site-title">CS Prompt</h1>
@@ -34,41 +28,48 @@
     </div>
   </header>
 
-  <!-- Conteúdo -->
   <main id="conteudo" class="container">
     <section class="hero" aria-label="Introdução">
       <h2>Biblioteca de Prompts Premium</h2>
-      <p>Prompts prontos e organizados para IA, produtividade, advocacia, marketing, programação e mais. <strong>Rápido, acessível, com favoritos e busca.</strong></p>
+      <p>Prompts prontos e organizados por categoria. Carregamento rápido, busca, favoritos e copiar com 1 clique.</p>
       <form id="busca" role="search" aria-label="Buscar prompts">
         <label for="q" class="sr-only">Buscar</label>
         <input id="q" type="search" placeholder="Buscar prompts…" inputmode="search" autocomplete="off" />
         <button type="submit" class="btn primary">Buscar</button>
       </form>
+      <div class="toolbar">
+        <label class="sr-only" for="ordenar">Ordenar</label>
+        <select id="ordenar" aria-label="Ordenar">
+          <option value="titulo">Título (A–Z)</option>
+          <option value="categoria">Categoria (A–Z)</option>
+        </select>
+        <button id="limpar-filtros" class="btn ghost">Limpar filtros</button>
+        <button id="carregar-todas" class="btn ghost">Carregar todas as categorias</button>
+      </div>
       <p class="muted" id="resultado-contagem" aria-live="polite"></p>
     </section>
 
-    <section id="categorias" aria-labelledby="titulo-categorias">
-      <h2 id="titulo-categorias">Categorias</h2>
-      <div id="chips" class="chips" role="list" aria-label="Filtros de categoria">
-        <!-- Gerado via JS -->
-      </div>
+    <section id="categorias">
+      <h2>Categorias</h2>
+      <div id="chips" class="chips" aria-label="Filtros de categoria"></div>
     </section>
 
-    <section id="prompts" aria-labelledby="titulo-prompts">
-      <h2 id="titulo-prompts">Prompts</h2>
+    <section id="prompts">
+      <h2>Prompts</h2>
       <div id="lista-prompts" class="grid" aria-live="polite"></div>
+      <div class="center"><button id="btn-carregar-mais" class="btn ghost" hidden>Carregar mais</button></div>
       <p id="estado" class="muted" hidden>Carregando…</p>
     </section>
 
-    <section id="favoritos" aria-labelledby="titulo-favoritos">
-      <h2 id="titulo-favoritos">Favoritos</h2>
+    <section id="favoritos">
+      <h2>Favoritos</h2>
       <div id="lista-favoritos" class="grid"></div>
       <p class="muted" id="vazio-fav">Você ainda não favoritou nenhum prompt.</p>
     </section>
 
-    <section id="doacao" class="doacao" aria-labelledby="titulo-doacao">
-      <h2 id="titulo-doacao">Apoie o Projeto</h2>
-      <p>💡 Se este site te ajuda, <strong>faça uma doação</strong> e mantenha tudo gratuito e atualizado.</p>
+    <section id="doacao" class="doacao">
+      <h2>Apoie o Projeto</h2>
+      <p>Se este site te ajuda, <strong>faça uma doação</strong> para mantê-lo gratuito e atualizado.</p>
       <div class="pix">
         <div class="pix__info">
           <p><strong>PIX (e-mail):</strong> <a href="mailto:csdesweb@gmail.com" id="pix-chave">csdesweb@gmail.com</a></p>
@@ -78,22 +79,20 @@
             <button class="btn ghost doe" data-valor="10">R$ 10</button>
             <button class="btn ghost doe" data-valor="20">R$ 20</button>
           </div>
-          <p class="obs">Qualquer valor ajuda. Obrigado! ❤️</p>
+          <p class="obs">Obrigado! ❤️</p>
         </div>
-        <!-- Fallback automático para QR se imagem local não existir -->
-        <img id="qr-pix" src="./assets/qrcode-pix.png" alt="QR Code para doação via PIX"
+        <img id="qr-pix" src="./assets/qrcode-pix.png" alt="QR Code do PIX"
              width="160" height="160" loading="lazy"
              onerror="this.onerror=null;this.src=`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(document.getElementById('pix-chave').textContent.trim())}`;">
       </div>
     </section>
   </main>
 
-  <!-- Popup de doação -->
   <dialog id="dlg-doacao" class="modal">
     <form method="dialog" class="modal__card">
       <button class="modal__close" aria-label="Fechar">✕</button>
       <h3>Gostou dos prompts?</h3>
-      <p>Considere apoiar o projeto para mantê-lo <strong>gratuito</strong> e atualizado.</p>
+      <p>Considere apoiar o projeto.</p>
       <div class="pix__botoes">
         <button class="btn" id="copiar-pix-modal">Copiar PIX</button>
         <button class="btn ghost doe" data-valor="5">R$ 5</button>
@@ -104,11 +103,10 @@
     </form>
   </dialog>
 
-  <!-- Rodapé -->
   <footer class="rodape">
     <div class="container rodape__grid">
       <p>© <span id="ano"></span> CS Prompt · <a href="mailto:csdesweb@gmail.com">csdesweb@gmail.com</a></p>
-      <nav class="rodape__links" aria-label="Links utilitários">
+      <nav class="rodape__links">
         <a href="./sitemap.xml">Sitemap</a>
         <a href="./robots.txt">Robots</a>
         <a href="#" id="voltar-topo">Voltar ao topo</a>
@@ -116,7 +114,6 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script defer src="./script.js"></script>
 </body>
 </html>
