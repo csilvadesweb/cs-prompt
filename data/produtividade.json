@@ -19,7 +19,7 @@
       "title": "Revisão semanal GTD",
       "category": "produtividade",
       "summary": "Feche ciclos e planeje a semana.",
-      "content": "Crie um roteiro de revisão semanal (GTD): esvaziar inbox, atualizar projetos, próximas ações, esperar por, algum dia/talvez e planejar próximos 7 dias."
+      "content": "Crie um roteiro de revisão semanal (GTD): esvaziar inboxes, atualizar projetos, próximas ações, itens aguardando e planejar próximos 7 dias."
     },
     {
       "id": "prod_004",
@@ -33,52 +33,113 @@
       "title": "Mapa mental do dia",
       "category": "produtividade",
       "summary": "Visualize áreas e tarefas.",
-      "content": "Crie um mapa mental com ramos: trabalho, estudos, saúde, casa, urgências e recados. Liste 2–4 tarefas por ramo e ordem sugerida."
+      "content": "Crie um mapa mental com ramos: trabalho, estudos, saúde, casa, urgências e lazer. Liste 2–4 tarefas por ramo e ordem sugerida."
     },
     {
       "id": "prod_006",
       "title": "Matriz de Eisenhower",
       "category": "produtividade",
       "summary": "Urgente vs. importante.",
-      "content": "Classifique tarefas em 4 quadrantes (fazer, agendar, delegar, eliminar) e proponha a sequência do dia."
+      "content": "Classifique tarefas em 4 quadrantes (fazer, agendar, delegar, eliminar) e proponha a sequência ideal de execução."
     },
     {
       "id": "prod_007",
       "title": "Plano mensal 80/20",
       "category": "produtividade",
       "summary": "Foque no impacto.",
-      "content": "Identifique as 20% atividades que geram 80% dos resultados e crie metas mensais com entregáveis e métricas claras."
+      "content": "Identifique as 20% de atividades que geram 80% dos resultados e crie metas mensais com entregáveis e métricas claras."
     },
     {
       "id": "prod_008",
       "title": "Rotina de fechamento do dia",
       "category": "produtividade",
       "summary": "Descompressão e preparo.",
-      "content": "Escreva um ritual de 10–15 min: revisar o que foi feito, agradecer/registrar aprendizados, planejar a primeira tarefa do dia seguinte e organizar mesa."
+      "content": "Escreva um ritual de 10–15 min: revisar o feito, registrar aprendizados, planejar a 1ª tarefa do dia seguinte e organizar o espaço."
     },
     {
       "id": "prod_009",
       "title": "Automatização de tarefas repetitivas",
       "category": "produtividade",
       "summary": "Economize tempo.",
-      "content": "Sugira 5 automações com apps (Google Sheets, Zapier/Make, IFTTT, atalhos) para relatórios, backups, lembretes e planilhas."
+      "content": "Sugira 5 automações com apps como Google Sheets, Zapier, Make, IFTTT ou atalhos para relatórios, backups e lembretes."
     },
     {
       "id": "prod_010",
       "title": "Organização digital minimalista",
       "category": "produtividade",
       "summary": "Menos atrito, mais foco.",
-      "content": "Crie um guia: estrutura de pastas simples, nomeação YYYY-MM-DD, 3 caixas de e-mail (inbox/ação/arquivo) e redução de notificações."
+      "content": "Crie um guia de estrutura simples de pastas, nomeação YYYY-MM-DD, inbox zero e eliminação de notificações não essenciais."
     },
-
-    // (...) CONTINUA ATÉ "prod_100"
-
     {
-      "id": "prod_100",
-      "title": "Revisão semanal de hábitos e metas",
+      "id": "prod_011",
+      "title": "Top 3 prioridades do dia",
       "category": "produtividade",
-      "summary": "Fechamento + replanejamento.",
-      "content": "Faça uma revisão de hábitos e metas: aderência, resultados, lições e ajustes para a próxima semana."
+      "summary": "Clareza do essencial.",
+      "content": "Defina as 3 prioridades diárias com critério de impacto e tempo. Gere uma frase de compromisso para cada prioridade."
+    },
+    {
+      "id": "prod_012",
+      "title": "Bloqueio de agenda por temas",
+      "category": "produtividade",
+      "summary": "Time blocking prático.",
+      "content": "Distribua o dia em blocos temáticos (profundo, comunicação, admin, saúde) com horários e regras de transição."
+    },
+    {
+      "id": "prod_013",
+      "title": "Ritual de início de foco",
+      "category": "produtividade",
+      "summary": "Entrar em estado de fluxo.",
+      "content": "Gere um ritual de 5 minutos: respiração 4-7-8, limpar área, fechar apps, modo não perturbe, definir objetivo do bloco."
+    },
+    {
+      "id": "prod_014",
+      "title": "Regra do 1% diário",
+      "category": "produtividade",
+      "summary": "Melhoria contínua.",
+      "content": "Proponha micro-hábitos que somem 1% de melhora por dia (leitura, anotação, reflexão e revisão de processos)."
+    },
+    {
+      "id": "prod_015",
+      "title": "Template de reunião enxuta",
+      "category": "produtividade",
+      "summary": "Menos tempo, mais decisão.",
+      "content": "Crie pauta de reunião com objetivo, 3 tópicos, tempo por tópico, decisão esperada e responsáveis."
+    },
+    {
+      "id": "prod_016",
+      "title": "Checklist de entrega",
+      "category": "produtividade",
+      "summary": "Evite retrabalho.",
+      "content": "Liste verificações antes de enviar: requisitos, revisão de erros, formato, links, prazos e confirmação com stakeholder."
+    },
+    {
+      "id": "prod_017",
+      "title": "Regra do calendário invertido",
+      "category": "produtividade",
+      "summary": "Priorize pessoal primeiro.",
+      "content": "Monte agenda semanal travando primeiro saúde, família e estudo; encaixe trabalho ao redor, preservando energia."
+    },
+    {
+      "id": "prod_018",
+      "title": "Deep Work de 90 minutos",
+      "category": "produtividade",
+      "summary": "Trabalho realmente profundo.",
+      "content": "Crie um protocolo para um bloco de 90 min: objetivo único, ambiente silencioso, sem internet e checklist de término."
+    },
+    {
+      "id": "prod_019",
+      "title": "Técnica Ivy Lee",
+      "category": "produtividade",
+      "summary": "Seis tarefas por dia.",
+      "content": "Liste 6 tarefas para amanhã, ordene por prioridade e execute uma por vez, reordenando ao fim do dia."
+    },
+    {
+      "id": "prod_020",
+      "title": "Planejamento quinzenal",
+      "category": "produtividade",
+      "summary": "Horizonte de 2 semanas.",
+      "content": "Divida metas em 2 sprints de 1 semana, com entregáveis, responsáveis (se houver) e critérios de sucesso."
     }
+    /* continue até prod_100 como no pacote anterior */
   ]
 }
