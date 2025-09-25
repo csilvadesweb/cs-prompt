@@ -1,0 +1,75 @@
+{
+  "prompts": [
+    {
+      "id": "adv_001",
+      "title": "Contestação de cobrança prescrita",
+      "category": "advocacia",
+      "summary": "Modelo para alegar prescrição quinquenal.",
+      "content": "Redija uma contestação para ação de cobrança cujo débito tem mais de 5 anos, fundamentando no art. 206, §5º do Código Civil e pleiteando extinção do processo com resolução de mérito."
+    },
+    {
+      "id": "adv_002",
+      "title": "Inicial de indenização por negativação indevida",
+      "category": "advocacia",
+      "summary": "Para inscrição indevida no Serasa.",
+      "content": "Crie uma petição inicial de ação de indenização por danos morais, com pedido de tutela de urgência para exclusão imediata do nome do autor dos cadastros de inadimplentes."
+    },
+    {
+      "id": "adv_003",
+      "title": "Pedido de tutela de urgência (art. 300 CPC)",
+      "category": "advocacia",
+      "summary": "Exemplo de liminar em caso urgente.",
+      "content": "Redija petição com fundamento no art. 300 do CPC requerendo tutela provisória de urgência para impedir corte de fornecimento de serviço essencial."
+    },
+    {
+      "id": "adv_004",
+      "title": "Modelo de réplica à contestação",
+      "category": "advocacia",
+      "summary": "Rebata argumentos do réu.",
+      "content": "Crie réplica destacando preliminares, impugnando documentos e reforçando pedidos, de forma clara e objetiva."
+    },
+    {
+      "id": "adv_005",
+      "title": "Ação revisional de contrato bancário",
+      "category": "advocacia",
+      "summary": "Para revisão de juros abusivos.",
+      "content": "Elabore petição inicial pleiteando revisão de contrato de empréstimo, com planilha de cálculo comparativo e pedido de devolução em dobro (art. 42 CDC)."
+    },
+    {
+      "id": "adv_006",
+      "title": "Contestação de ação de busca e apreensão",
+      "category": "advocacia",
+      "summary": "Defesa em alienação fiduciária.",
+      "content": "Redija contestação alegando quitação substancial da dívida e pleiteando purgação da mora ou extinção do processo."
+    },
+    {
+      "id": "adv_007",
+      "title": "Recurso inominado (Juizado Especial Cível)",
+      "category": "advocacia",
+      "summary": "Modelo de interposição de recurso.",
+      "content": "Crie recurso inominado com fundamento no art. 41 da Lei 9.099/95, atacando sentença desfavorável de forma fundamentada e clara."
+    },
+    {
+      "id": "adv_008",
+      "title": "Impugnação ao cumprimento de sentença",
+      "category": "advocacia",
+      "summary": "Para excesso de execução.",
+      "content": "Elabore peça processual apontando excesso de execução, apresentando planilha com valores corretos e pedindo redução."
+    },
+    {
+      "id": "adv_009",
+      "title": "Pedido de gratuidade de justiça",
+      "category": "advocacia",
+      "summary": "Para autor hipossuficiente.",
+      "content": "Redija pedido fundamentado no art. 98 do CPC, com declaração de hipossuficiência e documentos comprobatórios."
+    },
+    {
+      "id": "adv_010",
+      "title": "Modelo de notificação extrajudicial",
+      "category": "advocacia",
+      "summary": "Cobrança amigável antes da ação.",
+      "content": "Elabore notificação formal para devedor, concedendo prazo para pagamento sob pena de ajuizamento da ação."
+    }
+    /* continue com +90 prompts: ações de obrigação de fazer, danos morais, alimentos, execução de título extrajudicial, embargos à execução, inventário, usucapião, revisão de plano de saúde, direito do consumidor, direito trabalhista, contratos, habeas corpus, agravo de instrumento, apelação, sustentação oral, parecer jurídico, pedido de tutela de evidência, embargos de declaração, etc. */
+  ]
+}
